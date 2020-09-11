@@ -6,25 +6,36 @@ import java.awt.*;
 public class DrawPanel extends JPanel {
 
     Triangle tr = new Triangle();
+    private static final int angle = 30;
+    private static final double coefficient = 1.5;
+
     @Override
     public void paint(Graphics g) {
         Graphics2D gr = (Graphics2D) g;
         gr.setColor(Color.BLACK);
-
+        gr.clearRect(0, 0, getWidth(), getHeight());
+        tr.drawTriangle(gr);
     }
 
 
-    public void drawLineWithKey(int x, int y, Graphics g) {
-        drawLine(g, x, y);
+
+    public void rotateRight() {
+        tr.rotate(-angle);
+        repaint();
     }
 
-    public void drawLine(Graphics g, int x, int y) {
-        g.clearRect(0, 0, getWidth(), getHeight());
-        g.drawLine(50, 50, x, y);
+    public void rotateLeft() {
+        tr.rotate(angle);
+        repaint();
     }
 
-    public void rotateMinus() {
+    public void transformMinus() {
+        tr.changeEvenly(1 / coefficient);
+        repaint();
+    }
 
+    public void transformPlus() {
+        tr.changeEvenly(coefficient);
         repaint();
     }
 

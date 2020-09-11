@@ -1,8 +1,11 @@
 package com.company;
 
 public class Point {
-    private double x, y;
-    private double [][] vector = new double[1][];
+
+    public double x, y;
+
+    //массив двумерный для возможности перемножения матриц
+    public double [][] vector = new double[1][];
 
 
     public Point(double x, double y) {
@@ -12,18 +15,11 @@ public class Point {
         this.vector[0][0] = x;
 
         this.y = y;
-        this.vector[0][1] = x;
+        this.vector[0][1] = y;
 
-        this.vector[0][2] = x;
+        //{x, y, 1}
+        this.vector[0][2] = 1;
 
-    }
-
-    public double getX() {
-        return this.x;
-    }
-
-    public double getY() {
-        return this.y;
     }
 
     public void setX(double newX) {
@@ -36,6 +32,9 @@ public class Point {
         this.vector[0][1] = newY;
     }
 
+    //[a b 0]
+    //[c d 0]
+    //[0 0 1]
     public double[][] createChangingMatrix(double a, double b, double c, double d) {
         double[][] result = {
             {a, b, 0},
@@ -46,15 +45,17 @@ public class Point {
         return result;
     }
 
+    //Метод изменения масштаба (равномерно)
     public void changeEvenly(double coefficient) {
         change(coefficient, coefficient);
     }
 
+    //Метод изменения масштаба (неравномерно)
     public void change(double a, double d) {
 
-        double[][] changeMatrix = createChangingMatrix(a, 0, 0, 1);
+        double[][] changeMatrix = createChangingMatrix(a, 0, 0, d);
         try {
-            this.vector = Utills.multiplyMatrix(this.vector, changeMatrix);
+            this.vector = Utils.multiplyMatrix(this.vector, changeMatrix);
             this.x = vector[0][0];
             this.y = vector[0][1];
 
@@ -64,15 +65,24 @@ public class Point {
 
     }
 
+    //Метод поворота точки
     public void rotate(int degrees) {
         double[][] changeMatrix = createChangingMatrix(
                 Math.cos(Math.toRadians(degrees)), Math.sin(Math.toRadians(degrees)),
                 - Math.sin(Math.toRadians(degrees)), Math.cos(Math.toRadians(degrees))
         );
         try {
-            this.vector = Utills.multiplyMatrix(this.vector, changeMatrix);
+            this.vector = Utils.multiplyMatrix(this.vector, changeMatrix);
+            this.x = vector[0][0];
+            this.y = vector[0][1];
+
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "X: " + this.x + " Y: " + this.y;
     }
 }

@@ -1,10 +1,9 @@
 package com.company;
 
-public class Utills {
+public class Utils {
 
     public static double[][] multiplyMatrix(double[][] firstMatrix, double[][] secondMatrix) throws Exception {
         if (firstMatrix[0].length != secondMatrix.length) {
-            System.out.println(firstMatrix.length + " " + secondMatrix[0].length);
             throw new Exception("Умножение невозможно. Недопустимые размеры");
         } else {
             int m = firstMatrix.length;
@@ -34,6 +33,7 @@ public class Utills {
             }
             sb.append("\n");
         }
+
         return sb.toString();
     }
 }
